@@ -1,0 +1,89 @@
+{% extends 'sale/base.html' %}
+{% block content %}
+<!-- Layout container -->
+<div class="layout-page">
+
+ <!-- Content wrapper -->
+ <div class="content-wrapper">
+  <!-- Content -->
+
+  <div class="container-xxl flex-grow-1 container-p-y">
+   <div class="row">
+
+
+    <!-- Content wrapper -->
+    <div class="content-wrapper">
+     <!-- Content -->
+
+     <div class="container-xxl flex-grow-1 container-p-y">
+      <h4 class="py-3 mb-4"><span class="text-muted fw-light">Forms/</span>Update Products</h4>
+      <!-- Basic Layout & Basic with Icons -->
+      <div class="row">
+       <!-- Basic Layout -->
+       <div class="col-xxl">
+        <div class="card mb-4">
+         <div class="card-header d-flex align-items-center justify-content-between">
+         </div>
+         <div class="card-body">
+          <form action="{% url 'updateproduct' product_obj.id %}" method="post">
+           {% csrf_token %}
+           <div class="row mb-3">
+          </div>
+           <div class="row mb-3">
+            <label class="col-sm-2 col-form-label" for="basic-default-name">Product Name</label>
+            <div class="col-sm-10">
+             <input type="text" class="form-control" id="basic-default-name" name="product"
+              placeholder="Product Name" value="{{product_obj.product_name}}" />
+            </div>
+           </div>
+           <div class="row mb-3">
+            <label class="col-sm-2 col-form-label" for="basic-default-name">Price</label>
+            <div class="col-sm-10">
+             <input type="text" class="form-control" id="basic-default-name" name="price" placeholder="Price" value="{{product_obj.price}}"/>
+            </div>
+           </div>
+           <div class="row mb-3">
+            <label class="col-sm-2 col-form-label" for="basic-default-name">Stock Quantity</label>
+            <div class="col-sm-10">
+             <input type="text" class="form-control" id="basic-default-name" name="stock"
+              placeholder="Stock Quantity" value="{{product_obj.stock_quantity}}"/>
+            </div>
+           </div>
+           <div class="row mb-3">
+            <div class="mb-3">
+             <label for="formFileMultiple" class="form-label">Multiple Images</label>
+             <input class="form-control" type="file" id="formFileMultiple" multiple />
+            </div>
+           </div>
+           <div class="row mb-3">
+            <label class="col-sm-2 col-form-label" for="basic-default-company">Product Description</label>
+            <div class="col-sm-10">
+             <textarea name="description" id="description" name="description" class="form-control"
+              id="basic-default-company" value="{{product_obj.product_description}}"></textarea>
+            </div>
+           </div>
+
+           <div class="row justify-content-end">
+            <div class="col-sm-10">
+             <button type="submit" class="btn btn-primary">Update</button>
+            </div>
+           </div>
+          </form>
+         </div>
+        </div>
+       </div>
+
+      </div>
+     </div>
+     <!-- / Content -->
+    </div>
+    <!-- Content wrapper -->
+   </div>
+   <!-- / Layout page -->
+  </div>
+
+  <!-- Overlay -->
+  <div class="layout-overlay layout-menu-toggle"></div>
+ </div>
+ <!-- / Layout wrapper -->
+ {% endblock content %}

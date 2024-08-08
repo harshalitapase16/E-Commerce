@@ -1,0 +1,128 @@
+{% extends 'sale/base.html' %}
+{% block content %}
+        <!-- Layout container -->
+        <div class="layout-page">
+        
+          <!-- Content wrapper -->
+          <div class="content-wrapper">
+            <!-- Content -->
+
+            <div class="container-xxl flex-grow-1 container-p-y">
+              <div class="row"> 
+               
+              
+   <!-- Content wrapper -->
+   <div class="content-wrapper">
+    <!-- Content -->
+
+    <div class="container-xxl flex-grow-1 container-p-y">
+      <h4 class="py-3 mb-4"><span class="text-muted fw-light">Forms/</span>Sub Categories</h4>
+      <!-- Basic Layout & Basic with Icons -->
+      <div class="row">
+        <!-- Basic Layout -->
+        <div class="col-xxl">
+          <div class="card mb-4">
+            <div class="card-header d-flex align-items-center justify-content-between">
+            </div>
+            <div class="card-body">
+              <form action="{% url 'sub_category' cat_obj.id %}" method="post">
+                {% csrf_token %}
+                <div class="row mb-3">
+                  <label class="col-sm-2 col-form-label" for="basic-default-name">Category Name</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="basic-default-name" value="{{cat_obj.category_name}}" placeholder="Category Name" disabled/>
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-sm-10">
+                    <input type="hidden" class="form-control" id="basic-default-name" name="category_id" placeholder="Category Id" />
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label class="col-sm-2 col-form-label" for="basic-default-name">Sub Category Name</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="basic-default-name" name="subcategoryname" placeholder="Sub Category Name" />
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label class="col-sm-2 col-form-label" for="basic-default-company">Description</label>
+                  <div class="col-sm-10">
+                      <textarea name="description" id="description" name="subdescription" class="form-control"
+                  id="basic-default-company"></textarea>
+                  </div>
+                </div>
+                
+                <div class="row justify-content-end">
+                  <div class="col-sm-10">
+                    <button type="submit" class="btn btn-primary">Send</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+       
+      </div>
+    </div>
+    <!-- / Content -->
+
+    
+       <!-- Table within card -->
+       <h5 class="mb-4">All Sub Categories</h5>
+       <div class="table-responsive text-nowrap">
+         <table class="table card-table">
+           <thead>
+             <tr>
+              <th>Category Name</th>
+               <th>Sub Category Name</th>
+               <th>Description</th>
+               <th>Actions</th>
+               <th>Add Product</th>
+             </tr>
+           </thead>
+           <tbody class="table-border-bottom-0">
+            {% for item in subcat_obj %}
+             <tr>
+              <td>{{item.category}}</td> 
+               <td>
+                 <span class="fw-medium">{{item.sub_category_name}}</span>
+               </td>
+               <td>{{item.sub_cat_description}}</td> 
+               <td>
+                 <div class="dropdown">
+                   <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                     <i class="bx bx-dots-vertical-rounded"></i>
+                   </button>
+                   <div class="dropdown-menu">
+                     <a class="dropdown-item" href="{% url 'update_sub_category' item.id %}"
+                       ><i class="bx bx-edit-alt me-1"></i> Edit</a>
+                     <form action="{% url 'del_sub_category' item.id %}" method="post">
+                      {% csrf_token %}
+                      <button class="dropdown-item" type="submit">
+                          <i class="bx bx-trash me-1"></i>Delete</button>
+                  </form>
+                   </div>
+                 </div>
+               </td>
+               <td><a href="{% url 'product' item.id %}"><i class="fa fa-plus" style="font-size:24px"></i></a></td>
+             </tr>
+             {% endfor %}
+           </tbody>
+         </table>
+        
+       </div>
+       <!--/ Table within card -->
+            <div class="content-backdrop fade"></div>
+          </div>
+          <!-- Content wrapper -->
+        </div>
+        <!-- / Layout page -->
+      </div>
+
+      <!-- Overlay -->
+      <div class="layout-overlay layout-menu-toggle"></div>
+    </div>
+    <!-- / Layout wrapper -->
+    {% endblock content %}
+    
+   

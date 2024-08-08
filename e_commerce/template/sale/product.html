@@ -1,0 +1,179 @@
+{% extends 'sale/base.html' %}
+{% block content %}
+<!-- Layout container -->
+<div class="layout-page">
+
+ <!-- Content wrapper -->
+ <div class="content-wrapper">
+  <!-- Content -->
+
+  <div class="container-xxl flex-grow-1 container-p-y">
+   <div class="row">
+
+
+    <!-- Content wrapper -->
+    <div class="content-wrapper">
+     <!-- Content -->
+
+     <div class="container-xxl flex-grow-1 container-p-y">
+      <h4 class="py-3 mb-4"><span class="text-muted fw-light">Forms/</span> Products</h4>
+      <!-- Basic Layout & Basic with Icons -->
+      <div class="row">
+       <!-- Basic Layout -->
+       <div class="col-xxl">
+        <div class="card mb-4">
+         <div class="card-header d-flex align-items-center justify-content-between">
+          <!-- <div class="row justify-content-end">
+            <div class="col-sm-10">
+             <a href="" class="btn btn-primary">Back</a>
+            </div>
+           </div> -->
+         </div>
+         <div class="card-body">
+          <form action="{% url 'product' sub_cat_obj.id %}" enctype="multipart/form-data" method="post">
+           {% csrf_token %}
+           <div class="row mb-3">
+            <label class="col-sm-2 col-form-label" for="basic-default-name">Category Name</label>
+            <div class="col-sm-10">
+             <input type="text" class="form-control" id="basic-default-name" name="categoryname" value="{{sub_cat_obj.category}}"
+              placeholder="Category Name" disabled />
+            </div>
+           </div>
+           <div class="row mb-3">
+            <label class="col-sm-2 col-form-label" for="basic-default-name">Sub Category Name</label>
+            <div class="col-sm-10">
+             <input type="text" class="form-control" id="basic-default-name" name="subcategoryname"
+              placeholder="Sub Category Name" value="{{sub_cat_obj.sub_category_name}}" disabled />
+            </div>
+           </div>
+            <div class="row mb-3">
+            <div class="col-sm-10">
+              <input type="hidden" class="form-control" id="basic-default-name" name="subcategory_id" placeholder="Sub Category Id" />
+            </div>
+          </div>
+           <div class="row mb-3">
+            <label class="col-sm-2 col-form-label" for="basic-default-name">Product Name</label>
+            <div class="col-sm-10">
+             <input type="text" class="form-control" id="basic-default-name" name="product"
+              placeholder="Product Name" />
+            </div>
+           </div>
+           <div class="row mb-3">
+            <label class="col-sm-2 col-form-label" for="basic-default-name">Price</label>
+            <div class="col-sm-10">
+             <input type="text" class="form-control" id="basic-default-name" name="price" placeholder="Price" />
+            </div>
+           </div>
+           <div class="row mb-3">
+            <label class="col-sm-2 col-form-label" for="basic-default-name">Stock Quantity</label>
+            <div class="col-sm-10">
+             <input type="text" class="form-control" id="basic-default-name" name="stock"
+              placeholder="Stock Quantity" />
+            </div>
+           </div>
+           <div class="row mb-3">
+            <div class="mb-3">
+             <label for="formFileMultiple" class="form-label">Multiple Images</label>
+             <input class="form-control" name="images" type="file" id="formFileMultiple" multiple />
+            </div>
+           </div>
+           <div class="row mb-3">
+            <label class="col-sm-2 col-form-label" for="basic-default-company">Product Description</label>
+            <div class="col-sm-10">
+             <textarea name="description" id="description" name="description" class="form-control"
+              id="basic-default-company"></textarea>
+            </div>
+           </div>
+
+           <div class="row justify-content-end">
+            <div class="col-sm-10">
+             <button type="submit" class="btn btn-primary">Send</button>
+            </div>
+           </div>
+          </form>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+     <!-- / Content -->
+
+
+     <!-- Table within card -->
+     <h5 class="mb-4">All Products</h5>
+     <div class="table-responsive text-nowrap">
+      <table class="table card-table">
+       <thead>
+        <tr>
+         <th>Category Name</th>
+         <th>Sub Category Name</th>
+         <th>Product Name</th>
+         <th>Description</th>
+         <th>Price</th>
+         <th>Stock</th>
+         <th>Images</th>
+         <th>Actions</th>
+        </tr>
+       </thead>
+       <tbody class="table-border-bottom-0">
+        {% for item in product_obj %}
+        <tr>
+         <td>
+          <span class="fw-medium">{{item.category}}</span>
+         </td>
+         <td>
+          <span class="fw-medium">{{item.sub_category}}</span>
+         </td>
+         <td>
+          <span class="fw-medium">{{item.product_name}}</span>
+         </td>
+         <td>{{item.product_description}}</td>
+         <td>{{item.price}}</td>
+         <td>{{item.stock_quantity}}</td>
+         <td>
+          <!-- Display images -->
+    <div class="product-images">
+      {% for image in item.images.all %}
+          <img src="{{ image.image.url }}" alt="{{ item.product_name }}" style="max-width: 100px; max-height: 100px;">
+      {% empty %}
+          <p>No images available</p>
+      {% endfor %}
+  </div>
+        </td>
+         <!-- <td><span class="badge bg-label-primary me-1">Active</span></td> -->
+         <td>
+          <div class="dropdown">
+           <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+            <i class="bx bx-dots-vertical-rounded"></i>
+           </button>
+            
+           <div class="dropdown-menu">
+            <a class="dropdown-item" href="{% url 'updateproduct' item.id %}"><i class="bx bx-edit-alt me-1"></i>
+             Edit</a>
+     
+            <form action="{% url 'deleteproduct' item.id %}" method="post">
+             {% csrf_token %}
+             <button class="dropdown-item" type="submit">
+              <i class="bx bx-trash me-1"></i>Delete</button>
+            </form>
+           </div>
+         </td>
+        </tr>
+        {% endfor %}
+       </tbody>
+      </table>
+     
+     </div>
+     <!--/ Table within card -->
+     <div class="content-backdrop fade"></div>
+    </div>
+    <!-- Content wrapper -->
+   </div>
+   <!-- / Layout page -->
+  </div>
+
+  <!-- Overlay -->
+  <div class="layout-overlay layout-menu-toggle"></div>
+ </div>
+ <!-- / Layout wrapper -->
+ {% endblock content %}
